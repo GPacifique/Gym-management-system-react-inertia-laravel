@@ -16,7 +16,8 @@
         "predis/predis": "*",
         "spatie/laravel-medialibrary": "*",
         "spatie/laravel-permission": "^6.25",
-        "tightenco/ziggy": "^2.6"
+        "tightenco/ziggy": "^2.6",
+        "twilio/sdk": "^8.11"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^4.2",
