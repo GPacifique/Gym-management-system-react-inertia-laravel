@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="#f8f9fa"/>
+  <rect width="1200" height="60" fill="url(#grad2)"/>
+  <circle cx="30" cy="30" r="15" fill="white" opacity="0.3"/>
+  <text x="55" y="38" font-family="Arial" font-size="20" fill="white" font-weight="bold">GymMate Members</text>
+  
+  <g transform="translate(30, 80)">
+    <rect width="700" height="40" rx="6" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="15" y="27" font-family="Arial" font-size="14" fill="#a0aec0">🔍 Search members...</text>
+    <rect x="600" y="8" width="80" height="24" rx="5" fill="url(#grad2)"/>
+    <text x="640" y="25" font-family="Arial" font-size="12" fill="white" text-anchor="middle">+ Add</text>
+  </g>
+  
+  <g transform="translate(30, 140)">
+    <rect width="270" height="240" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+    <circle cx="135" cy="70" r="35" fill="#667eea"/>
+    <text x="135" y="80" font-family="Arial" font-size="28" fill="white" text-anchor="middle" font-weight="bold">SJ</text>
+    <text x="135" y="130" font-family="Arial" font-size="16" fill="#2d3748" text-anchor="middle" font-weight="bold">Sarah Johnson</text>
+    <rect x="85" y="142" width="100" height="20" rx="10" fill="#48bb78" opacity="0.2"/>
+    <text x="135" y="156" font-family="Arial" font-size="11" fill="#48bb78" text-anchor="middle" font-weight="600">PREMIUM</text>
+    <text x="135" y="185" font-family="Arial" font-size="12" fill="#718096" text-anchor="middle">sarah.j@email.com</text>
+    <rect x="70" y="205" width="60" height="20" rx="5" fill="#48bb78"/>
+    <text x="100" y="218" font-family="Arial" font-size="11" fill="white" text-anchor="middle">Check In</text>
+  </g>
+  
+  <g transform="translate(320, 140)">
+    <rect width="270" height="240" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+    <circle cx="135" cy="70" r="35" fill="#48bb78"/>
+    <text x="135" y="80" font-family="Arial" font-size="28" fill="white" text-anchor="middle" font-weight="bold">MC</text>
+    <text x="135" y="130" font-family="Arial" font-size="16" fill="#2d3748" text-anchor="middle" font-weight="bold">Mike Chen</text>
+    <rect x="85" y="142" width="100" height="20" rx="10" fill="#4299e1" opacity="0.2"/>
+    <text x="135" y="156" font-family="Arial" font-size="11" fill="#4299e1" text-anchor="middle" font-weight="600">STANDARD</text>
+    <text x="135" y="185" font-family="Arial" font-size="12" fill="#718096" text-anchor="middle">mike.c@email.com</text>
+    <rect x="70" y="205" width="60" height="20" rx="5" fill="#48bb78"/>
+    <text x="100" y="218" font-family="Arial" font-size="11" fill="white" text-anchor="middle">Check In</text>
+  </g>
+  
+  <g transform="translate(610, 140)">
+    <rect width="270" height="240" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+    <circle cx="135" cy="70" r="35" fill="#4299e1"/>
+    <text x="135" y="80" font-family="Arial" font-size="28" fill="white" text-anchor="middle" font-weight="bold">EM</text>
+    <text x="135" y="130" font-family="Arial" font-size="16" fill="#2d3748" text-anchor="middle" font-weight="bold">Emily Martinez</text>
+    <rect x="85" y="142" width="100" height="20" rx="10" fill="#48bb78" opacity="0.2"/>
+    <text x="135" y="156" font-family="Arial" font-size="11" fill="#48bb78" text-anchor="middle" font-weight="600">PREMIUM</text>
+    <text x="135" y="185" font-family="Arial" font-size="12" fill="#718096" text-anchor="middle">emily.m@email.com</text>
+    <rect x="70" y="205" width="60" height="20" rx="5" fill="#48bb78"/>
+    <text x="100" y="218" font-family="Arial" font-size="11" fill="white" text-anchor="middle">Check In</text>
+  </g>
+  
+  <g transform="translate(900, 140)">
+    <rect width="270" height="240" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+    <circle cx="135" cy="70" r="35" fill="#ed8936"/>
+    <text x="135" y="80" font-family="Arial" font-size="28" fill="white" text-anchor="middle" font-weight="bold">DB</text>
+    <text x="135" y="130" font-family="Arial" font-size="16" fill="#2d3748" text-anchor="middle" font-weight="bold">David Brown</text>
+    <rect x="85" y="142" width="100" height="20" rx="10" fill="#4299e1" opacity="0.2"/>
+    <text x="135" y="156" font-family="Arial" font-size="11" fill="#4299e1" text-anchor="middle" font-weight="600">STANDARD</text>
+    <text x="135" y="185" font-family="Arial" font-size="12" fill="#718096" text-anchor="middle">david.b@email.com</text>
+    <rect x="70" y="205" width="60" height="20" rx="5" fill="#48bb78"/>
+    <text x="100" y="218" font-family="Arial" font-size="11" fill="white" text-anchor="middle">Check In</text>
+  </g>
+  
+  <g transform="translate(30, 400)">
+    <rect width="270" height="240" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+    <circle cx="135" cy="70" r="35" fill="#9f7aea"/>
+    <text x="135" y="80" font-family="Arial" font-size="28" fill="white" text-anchor="middle" font-weight="bold">LW</text>
+    <text x="135" y="130" font-family="Arial" font-size="16" fill="#2d3748" text-anchor="middle" font-weight="bold">Lisa Wang</text>
+    <rect x="85" y="142" width="100" height="20" rx="10" fill="#ed8936" opacity="0.2"/>
+    <text x="135" y="156" font-family="Arial" font-size="11" fill="#ed8936" text-anchor="middle" font-weight="600">BASIC</text>
+    <text x="135" y="185" font-family="Arial" font-size="12" fill="#718096" text-anchor="middle">lisa.w@email.com</text>
+    <rect x="70" y="205" width="60" height="20" rx="5" fill="#48bb78"/>
+    <text x="100" y="218" font-family="Arial" font-size="11" fill="white" text-anchor="middle">Check In</text>
+  </g>
+  
+  <g transform="translate(320, 400)">
+    <rect width="270" height="240" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+    <circle cx="135" cy="70" r="35" fill="#667eea"/>
+    <text x="135" y="80" font-family="Arial" font-size="28" fill="white" text-anchor="middle" font-weight="bold">JT</text>
+    <text x="135" y="130" font-family="Arial" font-size="16" fill="#2d3748" text-anchor="middle" font-weight="bold">James Taylor</text>
+    <rect x="85" y="142" width="100" height="20" rx="10" fill="#48bb78" opacity="0.2"/>
+    <text x="135" y="156" font-family="Arial" font-size="11" fill="#48bb78" text-anchor="middle" font-weight="600">PREMIUM</text>
+    <text x="135" y="185" font-family="Arial" font-size="12" fill="#718096" text-anchor="middle">james.t@email.com</text>
+    <rect x="70" y="205" width="60" height="20" rx="5" fill="#48bb78"/>
+    <text x="100" y="218" font-family="Arial" font-size="11" fill="white" text-anchor="middle">Check In</text>
+  </g>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="#f8f9fa"/>
+  <rect width="1200" height="60" fill="url(#grad1)"/>
+  <circle cx="30" cy="30" r="15" fill="white" opacity="0.3"/>
+  <text x="55" y="38" font-family="Arial" font-size="20" fill="white" font-weight="bold">GymMate Dashboard</text>
+  
+  <g transform="translate(30, 90)">
+    <rect width="270" height="120" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="20" y="35" font-family="Arial" font-size="14" fill="#718096">Active Members</text>
+    <text x="20" y="80" font-family="Arial" font-size="36" fill="#2d3748" font-weight="bold">1,247</text>
+    <text x="240" y="80" font-family="Arial" font-size="14" fill="#48bb78" text-anchor="end">+12.5%</text>
+  </g>
+  
+  <g transform="translate(320, 90)">
+    <rect width="270" height="120" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="20" y="35" font-family="Arial" font-size="14" fill="#718096">Monthly Revenue</text>
+    <text x="20" y="80" font-family="Arial" font-size="36" fill="#2d3748" font-weight="bold">$45.2K</text>
+    <text x="240" y="80" font-family="Arial" font-size="14" fill="#f56565" text-anchor="end">+8.3%</text>
+  </g>
+  
+  <g transform="translate(610, 90)">
+    <rect width="270" height="120" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="20" y="35" font-family="Arial" font-size="14" fill="#718096">Today's Classes</text>
+    <text x="20" y="80" font-family="Arial" font-size="36" fill="#2d3748" font-weight="bold">12</text>
+    <text x="240" y="80" font-family="Arial" font-size="14" fill="#4299e1" text-anchor="end">4 ongoing</text>
+  </g>
+  
+  <g transform="translate(900, 90)">
+    <rect width="270" height="120" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="20" y="35" font-family="Arial" font-size="14" fill="#718096">Check-ins Today</text>
+    <text x="20" y="80" font-family="Arial" font-size="36" fill="#2d3748" font-weight="bold">384</text>
+    <text x="240" y="80" font-family="Arial" font-size="14" fill="#ed8936" text-anchor="end">Real-time</text>
+  </g>
+  
+  <g transform="translate(30, 240)">
+    <rect width="740" height="405" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="20" y="35" font-family="Arial" font-size="18" fill="#2d3748" font-weight="bold">Revenue Trend</text>
+    <polyline points="60,350 150,300 240,310 330,270 420,280 510,240 600,250 690,220" 
+              fill="none" stroke="#667eea" stroke-width="3"/>
+    <text x="60" y="380" font-family="Arial" font-size="12" fill="#718096" text-anchor="middle">Jan</text>
+    <text x="150" y="380" font-family="Arial" font-size="12" fill="#718096" text-anchor="middle">Feb</text>
+    <text x="240" y="380" font-family="Arial" font-size="12" fill="#718096" text-anchor="middle">Mar</text>
+    <text x="330" y="380" font-family="Arial" font-size="12" fill="#718096" text-anchor="middle">Apr</text>
+    <text x="420" y="380" font-family="Arial" font-size="12" fill="#718096" text-anchor="middle">May</text>
+    <text x="510" y="380" font-family="Arial" font-size="12" fill="#718096" text-anchor="middle">Jun</text>
+    <text x="600" y="380" font-family="Arial" font-size="12" fill="#718096" text-anchor="middle">Jul</text>
+    <text x="690" y="380" font-family="Arial" font-size="12" fill="#718096" text-anchor="middle">Aug</text>
+  </g>
+  
+  <g transform="translate(800, 240)">
+    <rect width="370" height="405" rx="8" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="20" y="35" font-family="Arial" font-size="18" fill="#2d3748" font-weight="bold">Recent Activity</text>
+    <circle cx="30" cy="80" r="10" fill="#48bb78"/>
+    <text x="50" y="85" font-family="Arial" font-size="13" fill="#2d3748">New member registered</text>
+    <circle cx="30" cy="130" r="10" fill="#4299e1"/>
+    <text x="50" y="135" font-family="Arial" font-size="13" fill="#2d3748">Class completed</text>
+    <circle cx="30" cy="180" r="10" fill="#ed8936"/>
+    <text x="50" y="185" font-family="Arial" font-size="13" fill="#2d3748">Payment received</text>
+  </g>
+</svg>
