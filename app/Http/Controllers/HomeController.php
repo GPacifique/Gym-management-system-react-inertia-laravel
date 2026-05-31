@@ -19,9 +19,9 @@ class HomeController extends Controller
 
         // Public landing stats (temporary placeholders)
         $stats = [
-            'businesses' => 0,
-            'branches' => 0,
-            'services' => 0,
+            'businesses' => 100,
+            'branches' => 300,
+            'services' => 600,
         ];
 
         return Inertia::render('Home', [

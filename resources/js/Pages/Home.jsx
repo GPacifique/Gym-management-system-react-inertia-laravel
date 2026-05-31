@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, usePage } from "@inertiajs/react";
-
+import ApplicationLogo from "@/Components/ApplicationLogo";
 export default function Home() {
     const { auth, stats } = usePage().props;
     const user = auth?.user;
@@ -10,11 +10,10 @@ export default function Home() {
 
             {/* ================= NAVBAR ================= */}
             <header className="bg-white border-b shadow-sm sticky top-0 z-50">
-                <div className="max-w-6xl mx-auto flex justify-between items-center p-4">
+               
+                <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
 
-                    <h1 className="text-xl font-bold text-blue-600">
-                        GymSaaS Pro
-                    </h1>
+                     <ApplicationLogo className="h-20 w-20 fill-current text-gray-500" />
 
                     <nav className="flex items-center gap-5 text-sm">
 

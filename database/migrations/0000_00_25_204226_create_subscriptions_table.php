@@ -12,7 +12,7 @@ return new class extends Migration
 
     $table->id();
 
-    $table->foreignId('business_id')
+    $table->foreignId('gym_id')
         ->constrained()
         ->onDelete('cascade');
 

@@ -10,7 +10,7 @@ import { route } from 'ziggy-js';
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
+    title: (title) => `${title} ${'Gym Management System -Aplatform that help gym owners/managers/Receptionist /Trainers to track daily gym operations '}`,
 
     resolve: (name) =>
         resolvePageComponent(

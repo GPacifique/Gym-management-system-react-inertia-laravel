@@ -12,14 +12,23 @@ return new class extends Migration
     public function up()
 {
     Schema::create('trainers', function (Blueprint $table) {
-        $table->id();
-        $table->string('name');
-        $table->string('email')->unique();
-        $table->string('phone')->nullable();
-        $table->string('specialization')->nullable();
-        $table->decimal('salary', 10, 2)->default(0);
-        $table->timestamps();
-    });
+    $table->id();
+
+    $table->foreignId('gym_id')
+        ->constrained()
+        ->cascadeOnDelete();
+
+    $table->string('name');
+    $table->string('email')->nullable();
+    $table->string('phone')->nullable();
+
+    $table->string('specialization')->nullable(); // bodybuilding, cardio, etc
+    $table->decimal('salary', 10, 2)->nullable();
+
+    $table->date('hire_date')->nullable();
+
+    $table->timestamps();
+});
 }
 
 

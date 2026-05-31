@@ -16,11 +16,11 @@ export default function Manager() {
 
                 {/* HEADER */}
                 <div>
-                    <h1 className="text-4xl font-bold text-gray-800">
+                    <h1 className="text-7xl font-bold text-gray-100">
                         Manager Dashboard
                     </h1>
 
-                    <p className="mt-3 text-gray-600">
+                    <p className="text-4xl mt-3 text-gray-400">
                         Track attendance, bookings, and gym operations.
                     </p>
                 </div>

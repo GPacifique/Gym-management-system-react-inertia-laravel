@@ -12,6 +12,7 @@ class Member extends Model
 
     protected $fillable = [
         'user_id',
+        'trainer_id',
         'name',
         'email',
         'phone',
@@ -30,5 +31,24 @@ class Member extends Model
 protected static function booted()
 {
     static::addGlobalScope(new GymScope);
+}
+public function trainer()
+{
+    return $this->belongsTo(Trainer::class);
+}
+public function subscriptions()
+{
+    return $this->hasMany(MemberSubscription::class);
+}
+
+public function activeSubscription()
+{
+    return $this->hasOne(MemberSubscription::class)
+        ->where('status', 'active')
+        ->latestOfMany();
+}
+public function notifications()
+{
+    return $this->hasMany(MemberNotification::class);
 }
 }

@@ -2,42 +2,55 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subscription extends Model
 {
-    use SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
-        'business_id',
-        'member_id',
-        'name',
-        'description',
-        'price',
-        'duration',
-        'duration_type',
-        'start_date',
-        'end_date',
-        'payment_status',
-        'payment_method',
-        'transaction_id',
-        'is_active',
+        'student_id','subscription_plan_id','start_date','end_date','next_billing_date','status'
     ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONSHIPS
-    |--------------------------------------------------------------------------
-    */
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
+        'next_billing_date' => 'date',
+    ];
 
-    public function business()
+    public function student()
     {
-        return $this->belongsTo(Business::class);
+        return $this->belongsTo(Student::class);
     }
 
-    public function member()
+    public function plan()
     {
-        return $this->belongsTo(Member::class);
+        return $this->belongsTo(SubscriptionPlan::class, 'subscription_plan_id');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function getTotalInvoicedAttribute(): int
+    {
+        return $this->invoices()->sum('amount_cents');
+    }
+
+    public function getTotalPaidAttribute(): int
+    {
+        return $this->payments()->where('status', 'succeeded')->sum('amount_cents');
+    }
+
+    public function getOutstandingBalanceAttribute(): int
+    {
+        return max(0, $this->total_invoiced - $this->total_paid);
     }
 }

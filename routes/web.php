@@ -6,85 +6,79 @@ use App\Http\Controllers\{
     HomeController,
     DashboardController,
     ProfileController,
-    SecurityController,
-    AnalyticsController,
+
+    GymController,
     MemberController,
-    StaffController,
-    TrainerController,
-    BranchController,
+
+    MembershipPlanController,
+    MemberSubscriptionController,
+    MemberPaymentController,
+    MemberReceiptController,
+    MemberNotificationController,
+
     AttendanceController,
     BookingController,
-    PaymentController,
-    SubscriptionController,
+
     WorkoutProgramController,
     NutritionPlanController,
-    PosController
+
+    BranchController,
+    StaffController,
+    TrainerController,
+
+    PosController,
+    AnalyticsController,
+    SecurityController
 };
-use App\Http\Controllers\ActivityController;
-use App\Http\Controllers\GymController;
-
-Route::middleware(['auth', 'role:super_admin'])->group(function () {
-
-    Route::get('/gyms', [GymController::class, 'index'])->name('gyms.index');
-
-    Route::get('/gyms/create', [GymController::class, 'create'])->name('gyms.create');
-
-    Route::post('/gyms', [GymController::class, 'store'])->name('gyms.store');
-
-    Route::get('/gyms/{gym}/edit', [GymController::class, 'edit'])->name('gyms.edit');
-
-    Route::put('/gyms/{gym}', [GymController::class, 'update'])->name('gyms.update');
-
-    Route::delete('/gyms/{gym}', [GymController::class, 'destroy'])->name('gyms.destroy');
-
-});
-
-Route::get('/activities', [ActivityController::class, 'index'])
-    ->name('activities.index');
-
-/*
-|--------------------------------------------------------------------------
-| HOME
-|--------------------------------------------------------------------------
-*/
-Route::get('/', [HomeController::class, 'index'])->name('home');
 
 require __DIR__.'/auth.php';
 
 /*
 |--------------------------------------------------------------------------
-| AUTHENTICATED
+| PUBLIC
+|--------------------------------------------------------------------------
+*/
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| AUTH BASE
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth'])->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | DASHBOARD REDIRECT
+    | DASHBOARD REDIRECT (RBAC ENTRY)
     |--------------------------------------------------------------------------
     */
     Route::get('/dashboard', function () {
         return match (auth()->user()->role) {
-            'super_admin'     => redirect()->route('superadmin.dashboard'),
-            'business_owner'  => redirect()->route('owner.dashboard'),
-            'manager'         => redirect()->route('manager.dashboard'),
-            'receptionist'    => redirect()->route('reception.dashboard'),
-            'trainer'         => redirect()->route('trainer.dashboard'),
-            default           => redirect()->route('member.dashboard'),
+
+            'super_admin'    => redirect()->route('superadmin.dashboard'),
+            'business_owner' => redirect()->route('owner.dashboard'),
+            'manager'        => redirect()->route('manager.dashboard'),
+            'receptionist'   => redirect()->route('reception.dashboard'),
+            'trainer'        => redirect()->route('trainer.dashboard'),
+
+            default          => redirect()->route('member.dashboard'),
         };
     })->name('dashboard');
 
     /*
     |--------------------------------------------------------------------------
-    | PROFILE (ALL USERS)
+    | PROFILE
     |--------------------------------------------------------------------------
     */
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
 
     /*
     |--------------------------------------------------------------------------
-    | SUPER ADMIN (FULL ACCESS)
+    | SUPER ADMIN
     |--------------------------------------------------------------------------
     */
     Route::middleware(['checkrole:super_admin'])->group(function () {
@@ -92,10 +86,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/superadmin/dashboard', [DashboardController::class, 'superAdmin'])
             ->name('superadmin.dashboard');
 
+        Route::resource('gyms', GymController::class);
         Route::resource('branches', BranchController::class);
         Route::resource('members', MemberController::class);
-        Route::get('/security', [SecurityController::class, 'index'])->name('security.index');
-        Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
+
+        Route::get('/analytics', [AnalyticsController::class, 'index'])
+            ->name('analytics.index');
+
+        Route::get('/security', [SecurityController::class, 'index'])
+            ->name('security.index');
     });
 
     /*
@@ -111,19 +110,37 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('staff', StaffController::class);
         Route::resource('trainers', TrainerController::class);
         Route::resource('members', MemberController::class);
-        Route::resource('subscriptions', SubscriptionController::class);
-        Route::resource('payments', PaymentController::class);
+
+        /*
+        |-------------------------
+        | MEMBER SYSTEM (CORE)
+        |-------------------------
+        */
+        Route::resource('membership-plans', MembershipPlanController::class);
+        Route::resource('member-subscriptions', MemberSubscriptionController::class);
+
+        Route::resource('member-payments', MemberPaymentController::class);
+        Route::resource('member-receipts', MemberReceiptController::class);
+        Route::resource('member-notifications', MemberNotificationController::class);
+
+        /*
+        |-------------------------
+        | PROGRAMS
+        |-------------------------
+        */
         Route::resource('workout-programs', WorkoutProgramController::class);
         Route::resource('nutrition-plans', NutritionPlanController::class);
-        Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
+
+        Route::get('/pos', [PosController::class, 'index'])
+            ->name('pos.index');
     });
 
     /*
     |--------------------------------------------------------------------------
-    | MANAGER (FULL OPERATION CONTROL)
+    | MANAGER
     |--------------------------------------------------------------------------
     */
-    Route::middleware(['checkrole:manager,super_admin'])->group(function () {
+    Route::middleware(['checkrole:manager'])->group(function () {
 
         Route::get('/manager/dashboard', [DashboardController::class, 'manager'])
             ->name('manager.dashboard');
@@ -131,8 +148,6 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('members', MemberController::class);
         Route::resource('attendance', AttendanceController::class);
         Route::resource('bookings', BookingController::class);
-        Route::resource('payments', PaymentController::class);
-        Route::resource('subscriptions', SubscriptionController::class);
     });
 
     /*
@@ -140,7 +155,7 @@ Route::middleware(['auth'])->group(function () {
     | RECEPTIONIST
     |--------------------------------------------------------------------------
     */
-    Route::middleware(['checkrole:receptionist,manager,super_admin'])->group(function () {
+    Route::middleware(['checkrole:receptionist'])->group(function () {
 
         Route::get('/reception/dashboard', [DashboardController::class, 'reception'])
             ->name('reception.dashboard');
@@ -148,7 +163,12 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('members', MemberController::class);
         Route::resource('attendance', AttendanceController::class);
         Route::resource('bookings', BookingController::class);
-        Route::resource('payments', PaymentController::class);
+
+        /*
+        | Payments handled ONLY via member-payments
+        */
+        Route::resource('member-payments', MemberPaymentController::class);
+        Route::resource('member-receipts', MemberReceiptController::class);
     });
 
     /*
@@ -156,7 +176,7 @@ Route::middleware(['auth'])->group(function () {
     | TRAINER
     |--------------------------------------------------------------------------
     */
-    Route::middleware(['checkrole:trainer,super_admin'])->group(function () {
+    Route::middleware(['checkrole:trainer'])->group(function () {
 
         Route::get('/trainer/dashboard', [DashboardController::class, 'trainer'])
             ->name('trainer.dashboard');
@@ -168,12 +188,9 @@ Route::middleware(['auth'])->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | MEMBER
+    | MEMBER SELF SERVICE
     |--------------------------------------------------------------------------
     */
-    Route::middleware(['auth', 'checkrole:super_admin,manager,receptionist'])->group(function () {
-    Route::resource('members', MemberController::class);
-});
     Route::middleware(['checkrole:member'])->group(function () {
 
         Route::get('/member/dashboard', [DashboardController::class, 'member'])
@@ -182,7 +199,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/my-bookings', [BookingController::class, 'myBookings'])
             ->name('bookings.mine');
 
-        Route::get('/my-subscriptions', [SubscriptionController::class, 'mySubscriptions'])
-            ->name('subscriptions.mine');
+        Route::get('/my-subscriptions', [MemberSubscriptionController::class, 'mySubscriptions'])
+            ->name('member-subscriptions.mine');
+
+        Route::get('/my-notifications', [MemberNotificationController::class, 'myNotifications'])
+            ->name('member-notifications.mine');
     });
 });

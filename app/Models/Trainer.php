@@ -4,44 +4,35 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Concerns\BelongsToGym;
- use App\Models\Scopes\GymScope;
+
 class Trainer extends Model
 {
-    use HasFactory, BelongsToGym;
+    use HasFactory;
 
-    protected $fillable = ['gym_id', 'name', 'specialization', 'email', 'phone', 'bio', 'photo_path', 'certifications', 'salary'];
+    protected $fillable = [
+        'gym_id',
+        'name',
+        'email',
+        'phone',
+        'specialization',
+        'salary',
+        'hire_date',
+    ];
 
-    protected $appends = ['photo_url'];
+    /*
+    |---------------------------------------
+    | RELATIONSHIPS
+    |---------------------------------------
+    */
 
-    /**
-     * Get the members assigned to this trainer.
-     */
-    public function members()
+    // Each trainer belongs to one gym
+    public function gym()
     {
-        return $this->hasMany(Member::class);
+        return $this->belongsTo(Gym::class);
     }
-
-    /**
-     * Get the classes taught by this trainer.
-     */
-    public function classes()
-    {
-        return $this->hasMany(GymClass::class, 'trainer_id');
-    }
-
-    /**
-     * Get publicly accessible photo URL or a placeholder.
-     */
-    public function getPhotoUrlAttribute(): string
-    {
-        if (!empty($this->photo_path)) {
-            return asset('storage/' . ltrim($this->photo_path, '/'));
-        }
-        return asset('images/trainer-placeholder.svg');
-    }
-    protected static function booted()
+public function members()
 {
-    static::addGlobalScope(new GymScope);
+    return $this->hasMany(Member::class);
 }
+
 }

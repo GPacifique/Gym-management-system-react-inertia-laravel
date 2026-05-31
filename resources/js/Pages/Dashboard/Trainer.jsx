@@ -1,5 +1,6 @@
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import { Head, usePage, Link } from "@inertiajs/react";
+import AssignedMembers from "@/Components/AssignedMembers";
 
 export default function Dashboard() {
     const { auth } = usePage().props;
@@ -13,11 +14,11 @@ export default function Dashboard() {
             {/* PAGE HEADER */}
             <div className="flex items-center justify-between mb-6">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-800">
+                    <h1 className="text-7xl font-bold text-gray-100">
                         Trainer Dashboard
                     </h1>
 
-                    <p className="text-gray-500 mt-1">
+                    <p className="text-4xl font-bold text-gray-500 mt-1">
                         Welcome back, {user.name}
                     </p>
                 </div>
@@ -154,6 +155,7 @@ export default function Dashboard() {
                     </table>
 
                 </div>
+                <AssignedMembers/>
             </div>
 
         </DashboardLayout>
