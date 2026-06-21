@@ -1,5 +1,4 @@
 import React from "react";
-import AuthenticatedLayout from "@/Components/DashboardLayout";
 import DashboardLayout from "@/Layouts/DashboardLayout";
 
 export default function Index({ assignedMembers, todaySessions }) {
