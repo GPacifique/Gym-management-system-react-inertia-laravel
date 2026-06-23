@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('trainers', function (Blueprint $table) {
+        Schema::create('members', function (Blueprint $table) {
             $table->id();
-
+            $table->string('scan_code')->unique()->nullable();
             $table->foreignId('gym_id')
                   ->constrained('gyms')
                   ->cascadeOnDelete();
@@ -23,19 +23,19 @@ return new class extends Migration
                   ->constrained('branches')
                   ->nullOnDelete();
 
-            $table->string('name');
+            $table->string('member_number')->unique();
+
+            $table->string('first_name');
+            $table->string('last_name');
 
             $table->string('phone')->nullable();
-
             $table->string('email')->nullable();
-
-            $table->string('specialization')->nullable();
-
-            $table->date('hire_date')->nullable();
 
             $table->enum('status', [
                 'active',
-                'inactive'
+                'inactive',
+                'suspended',
+                'expired'
             ])->default('active');
 
             $table->timestamps();
@@ -51,6 +51,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('trainers');
+        Schema::dropIfExists('members');
     }
 };

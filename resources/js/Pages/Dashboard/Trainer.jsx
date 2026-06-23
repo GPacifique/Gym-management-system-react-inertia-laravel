@@ -1,183 +1,234 @@
+import React from "react";
+import { Head, Link } from "@inertiajs/react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
-import { Head, usePage, Link } from "@inertiajs/react";
-import AssignedMembers from "@/Components/AssignedMembers";
+import Footer from "@/Components/Footer";
 
-export default function Dashboard() {
-    const { auth } = usePage().props;
-
-    const user = auth.user;
-
+export default function Dashboard({
+    trainer,
+    stats,
+    recentClients = [],
+    upcomingSessions = [],
+}) {
     return (
-        <DashboardLayout user={user}>
+        <>
+        <DashboardLayout>
             <Head title="Trainer Dashboard" />
 
-            {/* PAGE HEADER */}
-            <div className="flex items-center justify-between mb-6">
-                <div>
-                    <h1 className="text-7xl font-bold text-gray-100">
-                        Trainer Dashboard
-                    </h1>
+            <div className="min-h-screen bg-gray-50 p-6">
+                <div className="mx-auto max-w-7xl">
 
-                    <p className="text-4xl font-bold text-gray-500 mt-1">
-                        Welcome back, {user.name}
-                    </p>
-                </div>
+                    {/* Header */}
+                    <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div>
+                            <h1 className="text-3xl font-bold text-gray-900">
+                                Welcome, {trainer?.name}
+                            </h1>
 
-                <div>
-                    <span className="bg-green-100 text-green-700 px-4 py-2 rounded-lg text-sm font-medium">
-                        Active Trainer
-                    </span>
+                            <p className="mt-2 text-gray-600">
+                                Manage your members, sessions, and earnings.
+                            </p>
+                        </div>
+
+                        <div className="mt-4 md:mt-0">
+                            <Link
+                                href={route("trainer.members.create")}
+                                className="rounded-lg bg-indigo-600 px-5 py-3 text-white hover:bg-indigo-700"
+                            >
+                                Add New Member
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Stats */}
+                    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+
+                        <div className="rounded-xl bg-white p-6 shadow-sm">
+                            <h3 className="text-sm font-medium text-gray-500">
+                                Total Members
+                            </h3>
+
+                            <p className="mt-2 text-3xl font-bold text-gray-900">
+                                {stats.total_members}
+                            </p>
+                        </div>
+
+                        <div className="rounded-xl bg-white p-6 shadow-sm">
+                            <h3 className="text-sm font-medium text-gray-500">
+                                Active Members
+                            </h3>
+
+                            <p className="mt-2 text-3xl font-bold text-green-600">
+                                {stats.active_members}
+                            </p>
+                        </div>
+
+                        <div className="rounded-xl bg-white p-6 shadow-sm">
+                            <h3 className="text-sm font-medium text-gray-500">
+                                Monthly Earnings
+                            </h3>
+
+                            <p className="mt-2 text-3xl font-bold text-blue-600">
+                                ${stats.monthly_earnings}
+                            </p>
+                        </div>
+
+                        <div className="rounded-xl bg-white p-6 shadow-sm">
+                            <h3 className="text-sm font-medium text-gray-500">
+                                Today's Sessions
+                            </h3>
+
+                            <p className="mt-2 text-3xl font-bold text-orange-600">
+                                {stats.today_sessions}
+                            </p>
+                        </div>
+
+                    </div>
+
+                    {/* Main Content */}
+                    <div className="mt-8 grid gap-8 lg:grid-cols-3">
+
+                        {/* Recent Members */}
+                        <div className="lg:col-span-2 rounded-xl bg-white shadow-sm">
+                            <div className="border-b px-6 py-4">
+                                <h2 className="text-lg font-semibold">
+                                    Recent Members
+                                </h2>
+                            </div>
+
+                            <div className="overflow-x-auto">
+                                <table className="min-w-full">
+                                    <thead>
+                                        <tr className="bg-gray-50">
+                                            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">
+                                                Name
+                                            </th>
+
+                                            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">
+                                                Goal
+                                            </th>
+
+                                            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">
+                                                Status
+                                            </th>
+
+                                            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">
+                                                Joined
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {recentClients.map((client) => (
+                                            <tr
+                                                key={client.id}
+                                                className="border-t"
+                                            >
+                                                <td className="px-6 py-4">
+                                                    {client.name}
+                                                </td>
+
+                                                <td className="px-6 py-4">
+                                                    {client.goal}
+                                                </td>
+
+                                                <td className="px-6 py-4">
+                                                    <span className="rounded-full bg-green-100 px-3 py-1 text-xs text-green-700">
+                                                        {client.status}
+                                                    </span>
+                                                </td>
+
+                                                <td className="px-6 py-4">
+                                                    {client.joined_at}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        {/* Upcoming Sessions */}
+                        <div className="rounded-xl bg-white shadow-sm">
+                            <div className="border-b px-6 py-4">
+                                <h2 className="text-lg font-semibold">
+                                    Upcoming Sessions
+                                </h2>
+                            </div>
+
+                            <div className="p-6 space-y-4">
+                                {upcomingSessions.length > 0 ? (
+                                    upcomingSessions.map((session) => (
+                                        <div
+                                            key={session.id}
+                                            className="rounded-lg border p-4"
+                                        >
+                                            <h3 className="font-medium">
+                                                {session.member_name}
+                                            </h3>
+
+                                            <p className="text-sm text-gray-500">
+                                                {session.date}
+                                            </p>
+
+                                            <p className="mt-1 text-sm text-gray-600">
+                                                {session.time}
+                                            </p>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="text-gray-500">
+                                        No upcoming sessions.
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {/* Quick Actions */}
+                    <div className="mt-8 rounded-xl bg-white p-6 shadow-sm">
+                        <h2 className="mb-4 text-lg font-semibold">
+                            Quick Actions
+                        </h2>
+
+                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+
+                            <Link
+                                href={route("trainer.members.index")}
+                                className="rounded-lg border p-4 hover:bg-gray-50"
+                            >
+                                My Members
+                            </Link>
+
+                            <Link
+                                href={route("trainer.sessions.index")}
+                                className="rounded-lg border p-4 hover:bg-gray-50"
+                            >
+                                Training Sessions
+                            </Link>
+
+                            <Link
+                                href={route("trainer.payments.index")}
+                                className="rounded-lg border p-4 hover:bg-gray-50"
+                            >
+                                Earnings
+                            </Link>
+
+                            <Link
+                                href={route("trainer.profile")}
+                                className="rounded-lg border p-4 hover:bg-gray-50"
+                            >
+                                My Profile
+                            </Link>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
-            {/* STATS */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-
-                <StatCard
-                    title="Assigned Members"
-                    value="0"
-                />
-
-                <StatCard
-                    title="Sessions Today"
-                    value="0"
-                />
-
-                <StatCard
-                    title="Workout Programs"
-                    value="0"
-                />
-
-                <StatCard
-                    title="Pending Reviews"
-                    value="0"
-                />
-
-            </div>
-
-            {/* QUICK ACTIONS */}
-            <div className="mt-10 bg-white rounded-2xl shadow p-6">
-
-                <h2 className="text-xl font-bold text-gray-800 mb-5">
-                    Quick Actions
-                </h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-
-                    <Link
-                        href="#"
-                        className="bg-blue-600 hover:bg-blue-700 transition text-white p-4 rounded-xl"
-                    >
-                        <h3 className="font-semibold">
-                            Create Workout Plan
-                        </h3>
-
-                        <p className="text-sm mt-2 opacity-90">
-                            Build customized training programs
-                        </p>
-                    </Link>
-
-                    <Link
-                        href="#"
-                        className="bg-purple-600 hover:bg-purple-700 transition text-white p-4 rounded-xl"
-                    >
-                        <h3 className="font-semibold">
-                            View Assigned Members
-                        </h3>
-
-                        <p className="text-sm mt-2 opacity-90">
-                            Monitor member progress
-                        </p>
-                    </Link>
-
-                    <Link
-                        href="#"
-                        className="bg-green-600 hover:bg-green-700 transition text-white p-4 rounded-xl"
-                    >
-                        <h3 className="font-semibold">
-                            Nutrition Plans
-                        </h3>
-
-                        <p className="text-sm mt-2 opacity-90">
-                            Create meal recommendations
-                        </p>
-                    </Link>
-
-                    <Link
-                        href="#"
-                        className="bg-orange-600 hover:bg-orange-700 transition text-white p-4 rounded-xl"
-                    >
-                        <h3 className="font-semibold">
-                            Attendance Reports
-                        </h3>
-
-                        <p className="text-sm mt-2 opacity-90">
-                            Review member attendance
-                        </p>
-                    </Link>
-
-                </div>
-            </div>
-
-            {/* TODAY SCHEDULE */}
-            <div className="mt-10 bg-white rounded-2xl shadow p-6">
-
-                <h2 className="text-xl font-bold text-gray-800 mb-5">
-                    Today's Schedule
-                </h2>
-
-                <div className="overflow-x-auto">
-
-                    <table className="w-full border-collapse">
-
-                        <thead>
-                            <tr className="bg-gray-100 text-left">
-                                <th className="p-3">Time</th>
-                                <th className="p-3">Client</th>
-                                <th className="p-3">Session Type</th>
-                                <th className="p-3">Status</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr className="border-b">
-                                <td className="p-3">08:00 AM</td>
-                                <td className="p-3">No Sessions</td>
-                                <td className="p-3">-</td>
-                                <td className="p-3">
-                                    <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-sm">
-                                        Pending
-                                    </span>
-                                </td>
-                            </tr>
-                        </tbody>
-
-                    </table>
-
-                </div>
-                <AssignedMembers/>
-            </div>
-
-        </DashboardLayout>
-    );
-}
-
-/*
-|--------------------------------------------------------------------------
-| REUSABLE CARD COMPONENT
-|--------------------------------------------------------------------------
-*/
-
-function StatCard({ title, value }) {
-    return (
-        <div className="bg-white rounded-2xl shadow p-5">
-            <p className="text-gray-500 text-sm">
-                {title}
-            </p>
-
-            <h2 className="text-3xl font-bold mt-2 text-gray-800">
-                {value}
-            </h2>
-        </div>
+            
+            </DashboardLayout>
+            <Footer/>
+        </>
     );
 }

@@ -93,4 +93,8 @@ class User extends Authenticatable
 {
     return $this->belongsTo(Gym::class);
 }
+public function managedBranches()
+{
+    return $this->hasMany(Branch::class, 'manager_id');
+}
 }

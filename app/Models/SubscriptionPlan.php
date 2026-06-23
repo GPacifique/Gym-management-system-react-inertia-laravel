@@ -10,30 +10,33 @@ class SubscriptionPlan extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','price_cents','currency','interval','active','description'
+        'gym_id',
+        'name',
+        'description',
+        'price',
+        'duration',
+        'duration_type',
+        'is_active',
     ];
 
-    public function subscriptions()
-    {
-        return $this->hasMany(Subscription::class);
-    }
+    protected $casts = [
+        'price' => 'decimal:2',
+        'is_active' => 'boolean',
+    ];
 
-    public function branchPrices()
+    /**
+     * Get the gym that owns the subscription plan.
+     */
+    public function gym()
     {
-        return $this->hasMany(BranchPlanPrice::class);
+        return $this->belongsTo(Gym::class);
     }
 
     /**
-     * Get the price for a given branch, or default price if no override exists.
+     * Get all member subscriptions associated with this plan.
      */
-    public function getPriceForBranch(?int $branchId): int
+    public function memberSubscriptions()
     {
-        if ($branchId) {
-            $override = $this->branchPrices()->where('branch_id', $branchId)->first();
-            if ($override) {
-                return $override->price_cents;
-            }
-        }
-        return $this->price_cents;
+        return $this->hasMany(MemberSubscription::class);
     }
 }

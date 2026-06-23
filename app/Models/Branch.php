@@ -2,27 +2,37 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Branch extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        'business_id',
+        'gym_id',
         'name',
-        'code',
-        'country',
-        'city',
         'address',
         'phone',
-        'email',
-        'is_active',
+        'manager_id',
     ];
 
-    public function business()
+    public function gym()
     {
-        return $this->belongsTo(Business::class);
+        return $this->belongsTo(Gym::class);
     }
+
+    public function manager()
+    {
+        return $this->belongsTo(User::class, 'manager_id');
+    }
+    public function members()
+{
+    return $this->hasMany(Member::class);
+}
+public function trainers()
+{
+    return $this->hasMany(Trainer::class);
+}
+public function gymTrainers()
+{
+    return $this->hasMany(GymTrainer::class);
+}
 }

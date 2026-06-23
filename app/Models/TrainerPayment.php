@@ -4,16 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class TrainerPayment extends Model
 {
     protected $fillable = [
-        'gym_id',
+        'trainer_id',
         'member_id',
-        'member_subscription_id',
+        'gym_id',
         'amount',
-        'payment_method',
         'payment_date',
-        'status',
     ];
 
     protected $casts = [
@@ -21,9 +19,9 @@ class Payment extends Model
         'payment_date' => 'date',
     ];
 
-    public function gym()
+    public function trainer()
     {
-        return $this->belongsTo(Gym::class);
+        return $this->belongsTo(Trainer::class);
     }
 
     public function member()
@@ -31,11 +29,8 @@ class Payment extends Model
         return $this->belongsTo(Member::class);
     }
 
-    public function subscription()
+    public function gym()
     {
-        return $this->belongsTo(
-            MemberSubscription::class,
-            'member_subscription_id'
-        );
+        return $this->belongsTo(Gym::class);
     }
 }

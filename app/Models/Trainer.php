@@ -2,37 +2,53 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Trainer extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'gym_id',
+        'branch_id',
         'name',
-        'email',
         'phone',
+        'email',
         'specialization',
-        'salary',
         'hire_date',
+        'status',
     ];
 
-    /*
-    |---------------------------------------
-    | RELATIONSHIPS
-    |---------------------------------------
-    */
+    protected $casts = [
+        'hire_date' => 'date',
+    ];
 
-    // Each trainer belongs to one gym
     public function gym()
     {
         return $this->belongsTo(Gym::class);
     }
-public function members()
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
+    public function gymTrainers()
 {
-    return $this->hasMany(Member::class);
+    return $this->hasMany(GymTrainer::class);
 }
 
+public function gyms()
+{
+    return $this->belongsToMany(
+        Gym::class,
+        'gym_trainers'
+    )->withPivot('branch_id')
+     ->withTimestamps();
+}
+public function members()
+{
+    return $this->hasMany(TrainerMember::class);
+}
+public function payments()
+{
+    return $this->hasMany(TrainerPayment::class);
+}
 }

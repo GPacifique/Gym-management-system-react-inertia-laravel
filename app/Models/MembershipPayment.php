@@ -1,24 +1,25 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class MembershipPayment extends Model
 {
-    protected $table = 'attendance';
-
     protected $fillable = [
         'gym_id',
         'member_id',
-        'branch_id',
-        'check_in',
-        'check_out',
+        'membership_id',
+        'amount',
+        'payment_method',
+        'status',
+        'transaction_reference',
+        'payment_date',
+        'notes',
     ];
 
     protected $casts = [
-        'check_in'  => 'datetime',
-        'check_out' => 'datetime',
+        'payment_date' => 'date',
+        'amount' => 'decimal:2',
     ];
 
     public function gym()
@@ -31,8 +32,8 @@ class Attendance extends Model
         return $this->belongsTo(Member::class);
     }
 
-    public function branch()
+    public function membership()
     {
-        return $this->belongsTo(Branch::class);
+        return $this->belongsTo(Membership::class);
     }
 }

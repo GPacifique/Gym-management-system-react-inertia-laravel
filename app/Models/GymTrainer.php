@@ -4,21 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class GymTrainer extends Model
 {
-    protected $table = 'attendance';
-
     protected $fillable = [
         'gym_id',
-        'member_id',
+        'trainer_id',
         'branch_id',
-        'check_in',
-        'check_out',
-    ];
-
-    protected $casts = [
-        'check_in'  => 'datetime',
-        'check_out' => 'datetime',
     ];
 
     public function gym()
@@ -26,9 +17,9 @@ class Attendance extends Model
         return $this->belongsTo(Gym::class);
     }
 
-    public function member()
+    public function trainer()
     {
-        return $this->belongsTo(Member::class);
+        return $this->belongsTo(Trainer::class);
     }
 
     public function branch()

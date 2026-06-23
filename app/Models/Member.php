@@ -2,41 +2,36 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
- use App\Models\Scopes\GymScope;
-
+use App\Models\Membership;
 class Member extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        'user_id',
-        'trainer_id',
-        'name',
-        'email',
-        'phone',
-        'status',
-        'join_date',
-        'expiry_date',
         'gym_id',
+        'branch_id',
+        'member_number',
+        'first_name',
+        'last_name',
+        'phone',
+        'email',
+        'status',
     ];
 
-    public function user()
+    public function gym()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Gym::class);
     }
-   
 
-protected static function booted()
-{
-    static::addGlobalScope(new GymScope);
-}
-public function trainer()
-{
-    return $this->belongsTo(Trainer::class);
-}
-public function subscriptions()
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+    public function subscriptions()
 {
     return $this->hasMany(MemberSubscription::class);
 }
@@ -44,11 +39,40 @@ public function subscriptions()
 public function activeSubscription()
 {
     return $this->hasOne(MemberSubscription::class)
+                ->where('status', 'active')
+                ->latestOfMany();
+}
+public function trainerPayments()
+{
+    return $this->hasMany(TrainerPayment::class);
+}
+public function attendances()
+{
+    return $this->hasMany(Attendance::class);
+}
+
+
+
+
+public function memberships()
+{
+    return $this->hasMany(Membership::class);
+}
+
+public function activeMembership()
+{
+    return $this->hasOne(Membership::class)
         ->where('status', 'active')
         ->latestOfMany();
 }
-public function notifications()
+
+public function payments()
 {
-    return $this->hasMany(MemberNotification::class);
+    return $this->hasMany(MembershipPayment::class);
+}
+
+public function attendance()
+{
+    return $this->hasMany(MemberAttendance::class);
 }
 }

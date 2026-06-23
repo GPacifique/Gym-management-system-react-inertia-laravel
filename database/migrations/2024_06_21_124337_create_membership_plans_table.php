@@ -6,31 +6,38 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::create('membership_plans', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('gym_id')
-                ->constrained()
-                ->cascadeOnDelete();
+                  ->constrained('gyms')
+                  ->cascadeOnDelete();
 
             $table->string('name');
-            $table->text('description')->nullable();
 
-            $table->integer('duration_days');
+            $table->decimal('price', 10, 2)->default(0);
 
-            $table->decimal('price', 12, 2);
+            $table->unsignedInteger('duration_days');
 
-            $table->boolean('allow_classes')->default(true);
-            $table->boolean('allow_personal_training')->default(false);
-
-            $table->boolean('status')->default(true);
+            $table->boolean('is_active')->default(true);
 
             $table->timestamps();
+
+            $table->index('gym_id');
+
+            // Prevent duplicate plan names within the same gym
+            $table->unique(['gym_id', 'name']);
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('membership_plans');

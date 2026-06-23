@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('attendance', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('gym_id')
@@ -22,35 +22,22 @@ return new class extends Migration
                   ->constrained('members')
                   ->cascadeOnDelete();
 
-            $table->foreignId('member_subscription_id')
+            $table->foreignId('branch_id')
                   ->nullable()
-                  ->constrained('member_subscriptions')
+                  ->constrained('branches')
                   ->nullOnDelete();
 
-            $table->decimal('amount', 10, 2);
+            $table->timestamp('check_in');
 
-            $table->enum('payment_method', [
-                'cash',
-                'card',
-                'bank_transfer',
-                'mobile_money'
-            ]);
-
-            $table->date('payment_date');
-
-            $table->enum('status', [
-                'pending',
-                'paid',
-                'failed',
-                'refunded'
-            ])->default('paid');
+            $table->timestamp('check_out')
+                  ->nullable();
 
             $table->timestamps();
 
             $table->index('gym_id');
             $table->index('member_id');
-            $table->index('payment_date');
-            $table->index('status');
+            $table->index('branch_id');
+            $table->index('check_in');
         });
     }
 
@@ -59,6 +46,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('attendance');
     }
 };

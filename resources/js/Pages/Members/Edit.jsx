@@ -1,75 +1,143 @@
-import React from "react";
-import { useForm, usePage } from "@inertiajs/react";
+import React, { useState } from "react";
+import { router } from "@inertiajs/react";
+import DashboardLayout from "@/Layouts/DashboardLayout";
 
-export default function Edit() {
-
-    const { member, businesses } = usePage().props;
-
-    const { data, setData, post, processing } = useForm({
-        _method: "put",
-        business_id: member.business_id,
-        first_name: member.first_name,
-        last_name: member.last_name,
-        photo: null,
-        email: member.email || "",
+export default function Edit({ member, plans = [], membership }) {
+    const [values, setValues] = useState({
+        first_name: member.first_name || "",
+        last_name: member.last_name || "",
         phone: member.phone || "",
-        membership_type: member.membership_type || "",
-        notes: member.notes || "",
-        is_active: member.is_active,
+        email: member.email || "",
+        status: member.status || "active",
+        membership_plan_id: membership?.membership_plan_id || "",
     });
 
-    const submit = (e) => {
-        e.preventDefault();
+    const [loading, setLoading] = useState(false);
 
-        post(`/members/${member.id}`);
+    const handleChange = (e) => {
+        setValues({
+            ...values,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        router.put(route("members.update", member.id), values, {
+            onFinish: () => setLoading(false),
+        });
     };
 
     return (
-        <div className="max-w-3xl mx-auto p-6">
+        <DashboardLayout>
+            <div className="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow space-y-6">
 
-            <h1 className="text-3xl font-bold mb-6">
-                Edit Member
-            </h1>
+                <h1 className="text-xl font-bold">
+                    Edit Member
+                </h1>
 
-            <form onSubmit={submit} className="space-y-4">
+                {/* MEMBER INFO */}
+                <form onSubmit={handleSubmit} className="space-y-4">
 
-                <select
-                    value={data.business_id}
-                    onChange={(e) => setData("business_id", e.target.value)}
-                    className="w-full border p-3 rounded"
-                >
-                    {businesses.map((business) => (
-                        <option
-                            key={business.id}
-                            value={business.id}
+                    <div className="grid grid-cols-2 gap-4">
+
+                        <input
+                            name="first_name"
+                            value={values.first_name}
+                            onChange={handleChange}
+                            placeholder="First Name"
+                            className="border p-2 rounded"
+                        />
+
+                        <input
+                            name="last_name"
+                            value={values.last_name}
+                            onChange={handleChange}
+                            placeholder="Last Name"
+                            className="border p-2 rounded"
+                        />
+
+                    </div>
+
+                    <input
+                        name="phone"
+                        value={values.phone}
+                        onChange={handleChange}
+                        placeholder="Phone"
+                        className="w-full border p-2 rounded"
+                    />
+
+                    <input
+                        name="email"
+                        value={values.email}
+                        onChange={handleChange}
+                        placeholder="Email"
+                        className="w-full border p-2 rounded"
+                    />
+
+                    <select
+                        name="status"
+                        value={values.status}
+                        onChange={handleChange}
+                        className="w-full border p-2 rounded"
+                    >
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="suspended">Suspended</option>
+                        <option value="expired">Expired</option>
+                    </select>
+
+                    {/* MEMBERSHIP SECTION */}
+                    <div className="border-t pt-4 mt-4">
+
+                        <h2 className="font-semibold mb-2">
+                            Membership Plan
+                        </h2>
+
+                        {membership && (
+                            <div className="mb-3 text-sm text-gray-600">
+                                Current Plan:{" "}
+                                <span className="font-medium">
+                                    {membership.plan?.name ?? "N/A"}
+                                </span>
+                                <br />
+                                Expires:{" "}
+                                <span className="font-medium">
+                                    {membership.end_date}
+                                </span>
+                            </div>
+                        )}
+
+                        <select
+                            name="membership_plan_id"
+                            value={values.membership_plan_id}
+                            onChange={handleChange}
+                            className="w-full border p-2 rounded"
                         >
-                            {business.name}
-                        </option>
-                    ))}
-                </select>
+                            <option value="">-- Select Plan --</option>
 
-                <input
-                    type="text"
-                    value={data.first_name}
-                    onChange={(e) => setData("first_name", e.target.value)}
-                    className="w-full border p-3 rounded"
-                />
+                            {plans.map((plan) => (
+                                <option key={plan.id} value={plan.id}>
+                                    {plan.name} - {plan.price}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
-                <input
-                    type="text"
-                    value={data.last_name}
-                    onChange={(e) => setData("last_name", e.target.value)}
-                    className="w-full border p-3 rounded"
-                />
+                    {/* SUBMIT */}
+                    <div className="pt-4">
+                        <button
+                            disabled={loading}
+                            className="bg-blue-600 text-white px-4 py-2 rounded"
+                        >
+                            {loading ? "Updating..." : "Update Member"}
+                        </button>
+                    </div>
 
-                <button
-                    disabled={processing}
-                    className="bg-blue-600 text-white px-6 py-3 rounded"
-                >
-                    Update Member
-                </button>
-
-            </form>
-        </div>
+                </form>
+            </div>
+        </DashboardLayout>
     );
 }

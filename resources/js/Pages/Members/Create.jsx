@@ -1,152 +1,125 @@
 import React, { useState } from "react";
-import { useForm, Link } from "@inertiajs/react";
-import { Import } from "lucide-react";
+import { router } from "@inertiajs/react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
-export default function Create() {
 
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: "",
-        email: "",
+export default function Create({ auth,
+    errors,
+    plans = [], branches = [] }) {
+    const [values, setValues] = useState({
+        first_name: "",
+        last_name: "",
         phone: "",
-        join_date: "",
+        email: "",
         status: "active",
-        profile_image: null,
+        branch_id: "", // optional only if allowed
+        membership_plan_id: "",
     });
 
-    const [preview, setPreview] = useState(null);
-
-    const handleImage = (e) => {
-        const file = e.target.files[0];
-
-        setData("profile_image", file);
-
-        if (file) {
-            setPreview(URL.createObjectURL(file));
-        }
+    const handleChange = (e) => {
+        setValues({
+            ...values,
+            [e.target.name]: e.target.value,
+        });
     };
 
-    const submit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        post(route("members.store"), {
-            onSuccess: () => reset(),
-        });
+        router.post(route("members.store"), values);
     };
 
     return (
         <DashboardLayout>
-        <div className="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow">
+            <div className="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow">
 
-            {/* HEADER */}
-            <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-bold">
-                    ➕ Create Member
+                <h1 className="text-xl font-bold mb-4">
+                    Create Member
                 </h1>
 
-                <Link
-                    href={route("members.index")}
-                    className="text-blue-600 hover:underline"
-                >
-                    ← Back
-                </Link>
-            </div>
+                <form onSubmit={handleSubmit} className="space-y-4">
 
-            {/* FORM */}
-            <form onSubmit={submit} className="space-y-5">
-
-                {/* NAME */}
-                <div>
-                    <label className="block font-medium">Full Name</label>
                     <input
-                        type="text"
-                        value={data.name}
-                        onChange={(e) => setData("name", e.target.value)}
-                        className="w-full border rounded p-2"
+                        name="first_name"
+                        placeholder="First Name"
+                        className="w-full border p-2"
+                        onChange={handleChange}
                     />
-                    {errors.name && (
-                        <div className="text-red-500 text-sm">{errors.name}</div>
+
+                    <input
+                        name="last_name"
+                        placeholder="Last Name"
+                        className="w-full border p-2"
+                        onChange={handleChange}
+                    />
+
+                    <input
+                        name="phone"
+                        placeholder="Phone"
+                        className="w-full border p-2"
+                        onChange={handleChange}
+                    />
+
+                    <input
+                        name="email"
+                        placeholder="Email"
+                        className="w-full border p-2"
+                        onChange={handleChange}
+                    />
+
+                    {/* Only show if receptionist can choose branch */}
+                    {branches.length > 1 && (
+                        <select
+                            name="branch_id"
+                            className="w-full border p-2"
+                            onChange={handleChange}
+                        >
+                            <option value="">Select Branch</option>
+                            {branches.map((b) => (
+                                <option key={b.id} value={b.id}>
+                                    {b.name}
+                                </option>
+                            ))}
+                        </select>
                     )}
-                </div>
 
-                {/* EMAIL */}
-                <div>
-                    <label className="block font-medium">Email</label>
-                    <input
-                        type="email"
-                        value={data.email}
-                        onChange={(e) => setData("email", e.target.value)}
-                        className="w-full border rounded p-2"
-                    />
-                    {errors.email && (
-                        <div className="text-red-500 text-sm">{errors.email}</div>
-                    )}
-                </div>
-
-                {/* PHONE */}
-                <div>
-                    <label className="block font-medium">Phone</label>
-                    <input
-                        type="text"
-                        value={data.phone}
-                        onChange={(e) => setData("phone", e.target.value)}
-                        className="w-full border rounded p-2"
-                    />
-                </div>
-
-                {/* JOIN DATE */}
-                <div>
-                    <label className="block font-medium">Join Date</label>
-                    <input
-                        type="date"
-                        value={data.join_date}
-                        onChange={(e) => setData("join_date", e.target.value)}
-                        className="w-full border rounded p-2"
-                    />
-                </div>
-
-                {/* STATUS */}
-                <div>
-                    <label className="block font-medium">Status</label>
                     <select
-                        value={data.status}
-                        onChange={(e) => setData("status", e.target.value)}
-                        className="w-full border rounded p-2"
+                        name="status"
+                        className="w-full border p-2"
+                        onChange={handleChange}
                     >
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
+                        <option value="suspended">Suspended</option>
                     </select>
-                </div>
+                    {/* Membership Plan */}
+<div>
+    <label className="text-sm font-medium">
+        Membership Plan
+    </label>
 
-                {/* PROFILE IMAGE */}
-                <div>
-                    <label className="block font-medium">Profile Image</label>
+    <select
+        name="membership_plan_id"
+        value={values.membership_plan_id}
+        onChange={handleChange}
+        className="w-full border p-2 rounded"
+        required
+    >
+        <option value="">Select Plan</option>
 
-                    <input
-                        type="file"
-                        onChange={handleImage}
-                        className="w-full border rounded p-2"
-                    />
+        {plans.map((plan) => (
+            <option key={plan.id} value={plan.id}>
+                {plan.name} - {plan.price}
+            </option>
+        ))}
+    </select>
+</div>
 
-                    {preview && (
-                        <img
-                            src={preview}
-                            alt="Preview"
-                            className="w-24 h-24 rounded-full mt-3 object-cover"
-                        />
-                    )}
-                </div>
+                    <button className="bg-blue-600 text-white px-4 py-2 rounded">
+                        Save Member
+                    </button>
 
-                {/* SUBMIT */}
-                <button
-                    type="submit"
-                    disabled={processing}
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                >
-                    {processing ? "Saving..." : "Create Member"}
-                </button>
-
-            </form>
-        </div>
+                </form>
+            </div>
         </DashboardLayout>
     );
 }
