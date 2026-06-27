@@ -19,7 +19,7 @@ use App\Http\Controllers\TrainerMemberController;
 use App\Http\Controllers\MembershipPlanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AnalyticsController;
-use APP\Http\Controllers\GymController;
+use App\Http\Controllers\GymController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Staff\StaffController;
 use App\Http\Controllers\BranchController;

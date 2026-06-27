@@ -13,11 +13,18 @@ class StoreGymRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'nullable|email',
-            'phone' => 'nullable|string',
-            'address' => 'nullable|string',
-            'owner_id' => 'nullable|exists:users,id',
+             'name' => ['required', 'string', 'max:255'],
+        'slug' => ['required', 'string', 'unique:gyms,slug'],
+        'email' => ['required', 'email', 'unique:gyms,email'],
+        'phone' => ['nullable', 'string'],
+        'country' => ['nullable', 'string'],
+        'city' => ['nullable', 'string'],
+        'address' => ['nullable', 'string'],
+        'logo' => ['nullable', 'image'],
+        'status' => ['required'],
+        'owner_id' => ['nullable', 'exists:users,id'],
+        'subscription_plan_id' => ['nullable', 'exists:saas_plans,id'],
+        'subscription_expires_at' => ['nullable', 'date'],
         ];
     }
 }

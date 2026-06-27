@@ -64,7 +64,7 @@ export default function SuperAdmin() {
                     <div className="mt-4 md:mt-0 flex gap-3">
 
                         <Link
-                            href="/gyms/create"
+                            href={route('superadmin.gyms.create')}
                             className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-xl shadow"
                         >
                             Add Gym
@@ -149,7 +149,7 @@ export default function SuperAdmin() {
                         <div className="space-y-4">
 
                             <Link
-                                href="/gyms/create"
+                                href={route('superadmin.gyms.create')}
                                 className="block text-center w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl transition"
                             >
                                 Create New Gym

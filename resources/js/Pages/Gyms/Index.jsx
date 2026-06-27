@@ -9,7 +9,7 @@ export default function Index() {
             <div className="p-6">
                 <div className="flex justify-between mb-4">
                     <h1 className="text-xl font-bold">Gyms</h1>
-                    <Link href="/gyms/create" className="bg-blue-500 text-white px-4 py-2 rounded">
+                    <Link href={route('superadmin.gyms.create')} className="bg-blue-500 text-white px-4 py-2 rounded">
                         Create Gym
                     </Link>
                 </div>
