@@ -35,4 +35,15 @@ class Attendance extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+
+    // Provide compatibility attribute names used across the app
+    public function getCheckInTimeAttribute()
+    {
+        return $this->check_in;
+    }
+
+    public function getCheckOutTimeAttribute()
+    {
+        return $this->check_out;
+    }
 }

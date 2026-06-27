@@ -10,10 +10,13 @@ class AttendanceController extends Controller
 {
     public function index()
     {
-        $gymId = auth()->user()->default_gym_id;
+        // Prefer an explicit default gym if set on the user, fallback to gym_id
+        $gymId = auth()->user()->default_gym_id ?? auth()->user()->gym_id;
 
         if (!$gymId) {
-            abort(403, 'No gym assigned to this user.');
+            return redirect()
+                ->route('dashboard')
+                ->with('error', 'No gym assigned to this user.');
         }
 
         $attendances = Attendance::with('member')
@@ -80,7 +83,7 @@ class AttendanceController extends Controller
         Attendance::create([
             'member_id' => $member->id,
             'gym_id' => $gymId, // ✅ FIXED: NEVER NULL
-            'check_in_time' => now(),
+            'check_in' => now(),
             'status' => 'present',
         ]);
 

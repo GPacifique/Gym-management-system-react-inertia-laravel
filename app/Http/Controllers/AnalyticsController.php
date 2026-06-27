@@ -7,6 +7,8 @@ use App\Models\Trainer;
 use App\Models\Service;
 use App\Models\Attendance;
 use App\Models\MemberSubscription;
+use App\Models\Membership;
+use App\Models\MemberPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -119,5 +121,60 @@ class AnalyticsController extends Controller
             ->orderByDesc('members')
             ->limit(10)
             ->get();
+    }
+
+    public function members(Request $request)
+    {
+        $gym = auth()->user()->gym;
+
+        $members = Member::where('gym_id', $gym->id)
+            ->orderByDesc('created_at')
+            ->get();
+
+        return Inertia::render('Analytics/Members', [
+            'members' => $members,
+        ]);
+    }
+
+    public function memberships(Request $request)
+    {
+        $gym = auth()->user()->gym;
+
+        $memberships = Membership::with(['member', 'membershipPlan'])
+            ->where('gym_id', $gym->id)
+            ->orderByDesc('created_at')
+            ->get();
+
+        return Inertia::render('Analytics/Memberships', [
+            'memberships' => $memberships,
+        ]);
+    }
+
+    public function payments(Request $request)
+    {
+        $gym = auth()->user()->gym;
+
+        $payments = MemberPayment::with('member')
+            ->where('gym_id', $gym->id)
+            ->orderByDesc('payment_date')
+            ->get();
+
+        return Inertia::render('Analytics/Payments', [
+            'payments' => $payments,
+        ]);
+    }
+
+    public function attendance(Request $request)
+    {
+        $gym = auth()->user()->gym;
+
+        $attendances = Attendance::with('member')
+            ->where('gym_id', $gym->id)
+            ->orderByDesc('check_in')
+            ->get();
+
+        return Inertia::render('Analytics/Attendance', [
+            'attendances' => $attendances,
+        ]);
     }
 }

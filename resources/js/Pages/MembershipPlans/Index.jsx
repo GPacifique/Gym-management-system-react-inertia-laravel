@@ -2,6 +2,12 @@ import DashboardLayout from "@/Layouts/DashboardLayout";
 import { Link } from "@inertiajs/react";
 
 export default function Index({ plans }) {
+    const membershipPlans = Array.isArray(plans)
+        ? plans
+        : Array.isArray(plans?.data)
+        ? plans.data
+        : [];
+
     return (
         <DashboardLayout>
             <div className="p-6">
@@ -27,16 +33,24 @@ export default function Index({ plans }) {
                     </thead>
 
                     <tbody>
-                        {plans.map((plan) => (
-                            <tr key={plan.id} className="border-b">
-                                <td className="p-2">{plan.name}</td>
-                                <td>{plan.price}</td>
-                                <td>{plan.duration_days} days</td>
-                                <td>
-                                    {plan.status ? "Active" : "Inactive"}
+                        {membershipPlans.length > 0 ? (
+                            membershipPlans.map((plan) => (
+                                <tr key={plan.id} className="border-b">
+                                    <td className="p-2">{plan.name}</td>
+                                    <td>{plan.price}</td>
+                                    <td>{plan.duration_days} days</td>
+                                    <td>
+                                        {plan.status ? "Active" : "Inactive"}
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan={4} className="p-4 text-center text-slate-500">
+                                    No membership plans found.
                                 </td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
                 </table>
             </div>

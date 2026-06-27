@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Attendance;
 use App\Models\Membership;
 class Member extends Model
 {
@@ -73,6 +74,6 @@ public function payments()
 
 public function attendance()
 {
-    return $this->hasMany(MemberAttendance::class);
+    return $this->hasMany(Attendance::class);
 }
 }

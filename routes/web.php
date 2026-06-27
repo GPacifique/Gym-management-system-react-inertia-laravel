@@ -25,6 +25,10 @@ use App\Http\Controllers\Staff\StaffController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\MemberReceiptController;
 use App\Http\Controllers\MemberSubscriptionController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\WorkoutProgramController;
+use App\Http\Controllers\NutritionPlanController;
+use App\Http\Controllers\TrainerSessionController;
 // public
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
@@ -52,6 +56,16 @@ Route::middleware(['auth', 'checkrole:manager'])
 
         // other manager routes...
     });
+//Receptionist
+Route::middleware(['auth', 'checkrole:receptionist'])
+    ->prefix('reception')
+    ->name('reception.')
+    ->group(function () {
+
+        Route::get('/dashboard', [DashboardController::class, 'receptionDashboard'])
+            ->name('dashboard');
+    });
+
 //Super Admin
 Route::middleware(['auth', 'checkrole:super_admin'])
     ->prefix('super-admin')
@@ -101,15 +115,7 @@ Route::resource('member-subscriptions', MemberSubscriptionController::class);
         MemberPaymentController::class
     );
     Route::resource('member-payments', MemberPaymentController::class);
-    Route::resource(
-        'member-payments',
-        MemberPaymentController::class
-    );
     Route::resource('member-receipts', MemberReceiptController::class);
-    Route::resource(
-        'member-receipts',
-        MemberPaymentController::class
-    );
 
     Route::resource(
         'member-notifications',

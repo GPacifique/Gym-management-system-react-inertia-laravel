@@ -101,80 +101,115 @@ export default function DashboardLayout({ children }) {
                         )}
 
                         {/* MEMBERS */}
-                        <div>
-                            {sidebarOpen && (
-                                <p className="text-xs text-slate-400 uppercase mb-2">
-                                    Members
-                                </p>
-                            )}
+                        {hasRole("super_admin", "business_owner", "manager", "receptionist") && (
+                            <div>
+                                {sidebarOpen && (
+                                    <p className="text-xs text-slate-400 uppercase mb-2">
+                                        Members
+                                    </p>
+                                )}
 
-                            <Link href={route("members.index")} className={navClass("/members")}>
-                                👥 {sidebarOpen && "Members"}
-                            </Link>
+                                <Link href={route("members.index")} className={navClass("/members")}>
+                                    👥 {sidebarOpen && "Members"}
+                                </Link>
 
-                            <Link href={route("attendance.index")} className={navClass("/attendance")}>
-                                📅 {sidebarOpen && "Attendance"}
-                            </Link>
+                                <Link href={route("attendance.index")} className={navClass("/attendance")}>
+                                    📅 {sidebarOpen && "Attendance"}
+                                </Link>
 
-                            <Link href={route("bookings.index")} className={navClass("/bookings")}>
-                                📖 {sidebarOpen && "Bookings"}
-                            </Link>
-                        </div>
+                                <Link href={route("bookings.index")} className={navClass("/bookings")}>
+                                    📖 {sidebarOpen && "Bookings"}
+                                </Link>
+                            </div>
+                        )}
 
                         {/* MEMBERSHIP */}
-                        <div>
-                            {sidebarOpen && (
-                                <p className="text-xs text-slate-400 uppercase mb-2">
-                                    Membership
-                                </p>
-                            )}
+                        {hasRole("super_admin", "business_owner", "manager", "receptionist") && (
+                            <div>
+                                {sidebarOpen && (
+                                    <p className="text-xs text-slate-400 uppercase mb-2">
+                                        Membership
+                                    </p>
+                                )}
 
-                            <Link href={route("membership-plans.index")} className={navClass("/membership-plans")}>
-                                📋 {sidebarOpen && "Plans"}
-                            </Link>
+                                <Link href={route("membership-plans.index")} className={navClass("/membership-plans")}>
+                                    📋 {sidebarOpen && "Plans"}
+                                </Link>
 
-                            <Link href={route("member-subscriptions.index")} className={navClass("/member-subscriptions")}>
-                                📦 {sidebarOpen && "Subscriptions"}
-                            </Link>
+                                <Link href={route("member-subscriptions.index")} className={navClass("/member-subscriptions")}>
+                                    📦 {sidebarOpen && "Subscriptions"}
+                                </Link>
 
-                            <Link href={route("member-notifications.index")} className={navClass("/member-notifications")}>
-                                🔔 {sidebarOpen && "Notifications"}
-                            </Link>
-                        </div>
+                                <Link href={route("member-notifications.index")} className={navClass("/member-notifications")}>
+                                    🔔 {sidebarOpen && "Notifications"}
+                                </Link>
+                            </div>
+                        )}
 
                         {/* FINANCE */}
-                        <div>
-                            {sidebarOpen && (
-                                <p className="text-xs text-slate-400 uppercase mb-2">
-                                    Finance
-                                </p>
-                            )}
+                        {hasRole("super_admin", "business_owner", "manager", "receptionist") && (
+                            <div>
+                                {sidebarOpen && (
+                                    <p className="text-xs text-slate-400 uppercase mb-2">
+                                        Finance
+                                    </p>
+                                )}
 
-                            <Link href={route("member-payments.index")} className={navClass("/member-payments")}>
-                                💰 {sidebarOpen && "Payments"}
-                            </Link>
+                                <Link href={route("member-payments.index")} className={navClass("/member-payments")}>
+                                    💰 {sidebarOpen && "Payments"}
+                                </Link>
 
-                            <Link href={route("member-receipts.index")} className={navClass("/member-receipts")}>
-                                🧾 {sidebarOpen && "Receipts"}
-                            </Link>
-                        </div>
+                                <Link href={route("member-receipts.index")} className={navClass("/member-receipts")}>
+                                    🧾 {sidebarOpen && "Receipts"}
+                                </Link>
+                            </div>
+                        )}
 
                         {/* PROGRAMS */}
-                        <div>
-                            {sidebarOpen && (
-                                <p className="text-xs text-slate-400 uppercase mb-2">
-                                    Programs
-                                </p>
-                            )}
+                        {hasRole("business_owner", "manager", "trainer") && (
+                            <div>
+                                {sidebarOpen && (
+                                    <p className="text-xs text-slate-400 uppercase mb-2">
+                                        Programs
+                                    </p>
+                                )}
 
-                            <Link href={route("workout-programs.index")} className={navClass("/workout-programs")}>
-                                🏋️ {sidebarOpen && "Workouts"}
-                            </Link>
+                                <Link href={route("workout-programs.index")} className={navClass("/workout-programs")}>
+                                    🏋️ {sidebarOpen && "Workouts"}
+                                </Link>
 
-                            <Link href={route("nutrition-plans.index")} className={navClass("/nutrition-plans")}>
-                                🥗 {sidebarOpen && "Nutrition"}
-                            </Link>
-                        </div>
+                                <Link href={route("nutrition-plans.index")} className={navClass("/nutrition-plans")}>
+                                    🥗 {sidebarOpen && "Nutrition"}
+                                </Link>
+                            </div>
+                        )}
+
+                        {/* REPORTS */}
+                        {hasRole("business_owner", "manager") && (
+                            <div>
+                                {sidebarOpen && (
+                                    <p className="text-xs text-slate-400 uppercase mb-2">
+                                        Reports
+                                    </p>
+                                )}
+
+                                <Link href={route("reports.members")} className={navClass("/reports/members")}>
+                                    📈 {sidebarOpen && "Member Reports"}
+                                </Link>
+
+                                <Link href={route("reports.memberships")} className={navClass("/reports/memberships")}>
+                                    🧾 {sidebarOpen && "Membership Reports"}
+                                </Link>
+
+                                <Link href={route("reports.payments")} className={navClass("/reports/payments")}>
+                                    💵 {sidebarOpen && "Payment Reports"}
+                                </Link>
+
+                                <Link href={route("reports.attendance")} className={navClass("/reports/attendance")}>
+                                    🗓️ {sidebarOpen && "Attendance Reports"}
+                                </Link>
+                            </div>
+                        )}
                     </div>
 
                     {/* USER */}

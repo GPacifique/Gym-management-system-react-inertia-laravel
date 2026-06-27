@@ -18,7 +18,7 @@ class GymAnalytics extends Component
         $this->totalMembers = Member::where('gym_id', $gymId)->count();
 
         $activeMembers = Attendance::where('gym_id', $gymId)
-            ->whereMonth('check_in_time', now()->month)
+            ->whereMonth('check_in', now()->month)
             ->distinct('member_id')
             ->count('member_id');
 

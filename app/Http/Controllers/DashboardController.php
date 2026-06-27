@@ -8,7 +8,7 @@ use App\Models\Attendance;
 Use Illuminate\Support\Facades\App;
 Use App\Models\Booking;
 Use App\Models\Member;
-Use APP\Models\Payment;
+Use App\Models\Payment;
 Use App\Models\Activity;
 class DashboardController extends Controller
 {
